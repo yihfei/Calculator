@@ -3,6 +3,7 @@ const negativeButton = document.querySelector('.negative');
 const percentageButton = document.querySelector('.percentage');
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
+const signs = document.querySelectorAll('.sign');
 const display = document.querySelector('.display');
 
 let evaluate;
@@ -37,6 +38,7 @@ function operate(operator, a) {
             return b => divide(a, b);
         case "=":
             display.textContent = a;
+            enableButtons(signs);
             return ;
         default:
             return "error";
@@ -70,6 +72,9 @@ function inputNumber(e) {
         display.textContent = '-' + display.textContent;
     }
 
+    // enable signs
+    enableButtons(signs);
+
 }
 
 function inputOperator(e) {
@@ -85,6 +90,9 @@ function inputOperator(e) {
 
     //display.textContent = '';
     e.target.classList.add('selected');
+    
+    // disable other operators except equals
+    disableButtons(signs);
 
     evaluate = operate(operator, evaluate);
 
@@ -102,6 +110,14 @@ function clearOperator() {
     })
 
     return isEqual;
+}
+
+function disableButtons(buttons) {
+    buttons.forEach(button => button.disabled = true);
+}
+
+function enableButtons(buttons) {
+    buttons.forEach(button => button.disabled = false);
 }
 
 clearButton.addEventListener('click', () => {
