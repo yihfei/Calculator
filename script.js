@@ -126,9 +126,16 @@ clearButton.addEventListener('click', () => {
 
 negativeButton.addEventListener('click', () => {
     if (display.textContent.includes('-')) {
-        return;
+        display.textContent = display.textContent.slice(1);
+        console.log('press')
+    } else {
+        display.textContent = '-' + display.textContent;
     }
-    display.textContent = '-' + display.textContent;
+    
+})
+
+percentageButton.addEventListener('click', () => {
+    display.textContent = Number(display.textContent) / 100;
 })
 
 
