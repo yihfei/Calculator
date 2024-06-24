@@ -46,9 +46,14 @@ function operate(operator, a) {
 }
 
 function inputNumber(e) {
-    if (clearOperator() || evaluate) {
+    if (display.textContent.length == 9) {
+        return;
+    }
+
+    if (clearOperator()) {
         display.textContent = '';
     }
+
     
     const input = e.target.textContent;
     const lastChar = display.textContent.charAt(display.textContent.length - 1);
@@ -72,6 +77,7 @@ function inputNumber(e) {
         display.textContent = '-' + display.textContent;
     }
 
+    formatSize()
     // enable signs
     enableButtons(signs);
 
@@ -88,7 +94,7 @@ function inputOperator(e) {
         evaluate = currentNumber
     }
 
-    //display.textContent = '';
+    display.textContent = '';
     e.target.classList.add('selected');
     
     // disable other operators except equals
@@ -120,6 +126,37 @@ function enableButtons(buttons) {
     buttons.forEach(button => button.disabled = false);
 }
 
+function formatSize() {
+    if (display.textContent.length > 7) {
+        // Get the current font size in vh units
+        let currentFontSize = parseFloat(window.getComputedStyle(display).fontSize); // Get computed font size in px
+        let currentFontSizeVh = (currentFontSize / window.innerHeight) * 100; // Convert px to vh
+    
+        // Multiply the current font size in vh by 0.8
+        let newFontSizeVh = currentFontSizeVh * 0.86;
+    
+        // Apply the new font size to the display element
+        display.style.fontSize = newFontSizeVh + 'vh';
+    }
+}
+
+function formatNumber(number) {
+    // Check if the input is a valid number
+    if (typeof number !== 'number' || isNaN(number)) {
+      console.error('Invalid number format:', number);
+      return;
+    }
+    
+    // Check if the number is very small and needs scientific notation
+    if (Math.abs(number) < 1e-6 && Math.abs(number) !== 0) {
+      return number.toExponential(2); // Return in scientific notation with six decimal places in the exponent
+    } else {
+      return number.toString(); // Return as regular number
+    }
+  }
+  
+
+
 clearButton.addEventListener('click', () => {
     display.textContent = '0';
 });
@@ -135,7 +172,8 @@ negativeButton.addEventListener('click', () => {
 })
 
 percentageButton.addEventListener('click', () => {
-    display.textContent = Number(display.textContent) / 100;
+    display.textContent = formatNumber(Number(display.textContent) / 100);
+    
 })
 
 
