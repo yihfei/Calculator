@@ -1,5 +1,6 @@
 body {
-    height: 99vh;
+    height: 100vh;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,4 +111,9 @@ button {
     border-radius: calc(var(--button-dim) / 2 );
     text-align: start; 
     padding: 0 2.6vh   
+}
+
+footer {
+    position: absolute;
+    bottom: 1vh;
 }
