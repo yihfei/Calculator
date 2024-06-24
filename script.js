@@ -31,7 +31,7 @@ function operate(operator, a) {
             return b => add(a, b);
         case "-":
             return b => subtract(a, b);
-        case "x":
+        case "X":
             return b => multiply(a, b);
         case "/":
             return b => divide(a, b);
